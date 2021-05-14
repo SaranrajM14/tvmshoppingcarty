@@ -1,0 +1,35 @@
+@GetMapping("/showAddtocart")
+    public String showAddtocart(Model model) {
+        // create model attribute to bind form data
+		Addtocart addtocart = new Addtocart();
+        model.addAttribute("addtocart", addtocart);
+        return "new_addtocart";
+    }
+@GetMapping("/showAddtocart/{userid}")
+	public String showAddtocart(@PathVariable(value = "userid") long userid, Model model) {
+    	// get employee from the service
+    	Addtocart addtocart = addtocartService.getAddtocartById(userid);
+
+        // set employee as a model attribute to pre-populate the form
+        model.addAttribute("addtocart", addtocart);
+    	return "new_addtocart";
+    }
+@PostMapping("/saveAddtocart")
+    public String saveAddtocart(@ModelAttribute("addtocart") Addtocart addtocart) {
+        // save employee to database
+    	addtocartService.saveAddtocart(addtocart);
+        return "redirect:/";
+    }
+    
+    
+  @GetMapping("/showFormForProduct/{userid}/{productid}")
+    public String showFormForUpdate(@PathVariable(value = "userid") long userid,@PathVariable(value = "productid") long productid, Model model) {
+
+        // get employee from the service
+        User user = addtocartUserService.getUserById(userid);
+        Product product = addtocartProductService.getProductById(productid);
+        // set employee as a model attribute to pre-populate the form
+        model.addAttribute("user", user);
+        model.addAttribute("product", product);
+        return "upadate_addtocart";
+    }

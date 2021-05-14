@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Employee Management System</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Add to cart</h1>
+        <hr>
+        
+		
+        <h3>User Details</h3>
+        <form action="#" th:action="@{/saveAdd}" th:object="${user}" method="POST">
+
+            <!-- Add hidden form field to handle update -->
+            <label>Userid<input type="text" th:field="*{userid}" /></label>
+
+            <input type="text" th:field="*{Name}" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{mobileno}" class="form-control mb-4 col-4">
+			     
+
+            
+        </form>
+        <h2> Product Details</h2>
+        <form action="#" th:action="@{/saveAddto}" th:object="${product}" method="POST">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{productid}" />
+
+            <input type="text" th:field="*{productname}" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{price}" class="form-control mb-4 col-4">
+			<input type="text" th:field="*{qty}" class="form-control mb-4 col-4">
+          </form>
+        <div class="container">
+      
+        <h5>Student Management System</h5>
+        <hr>
+        <h6>Proceed to Pay</h6>
+
+       <form action="#" th:action="@{/savePayment}" th:object="${payment}" method="POST">
+            
+            <input type="text" th:field="*{cardno}" placeholder="Enter Card No" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{expmonth}" placeholder="Enter Expiere month" class="form-control mb-4 col-4">
+
+            <input type="text" th:field="*{expyear}" placeholder="Enter Expier Year" class="form-control mb-4 col-4">
+
+            <button type="submit" class="btn btn-info col-2"> Place order</button>
+        </form>
+
+        <hr>
+    </div>
+        
+        
+        
+
+        <hr>
+<form action="#" th:action="@{/saveAdd}" th:object="${user}" method="POST">
+        <a th:href="@{/addtocaart/{{userid}(userid=${user.userid})}"> Back to Addtocart List</a>
+        </form>
+    </div>
+</body>
+
+</html>
