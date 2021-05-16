@@ -10,9 +10,8 @@ public class Product {
 	@Id
 	private long productid;
 	private String productname;
-	private long price;
-	private long qty;
-	private long finalprice;
+	private long productprice;
+	private long productqtyavilabel;
 	public long getProductid() {
 		return productid;
 	}
@@ -25,23 +24,18 @@ public class Product {
 	public void setProductname(String productname) {
 		this.productname = productname;
 	}
-	public long getPrice() {
-		return price;
+	public long getProductprice() {
+		return productprice;
 	}
-	public void setPrice(long price) {
-		this.price = price;
+	public void setProductprice(long productprice) {
+		this.productprice = productprice;
 	}
-	public long getQty() {
-		return qty;
+	public long getProductqtyavilabel() {
+		return productqtyavilabel;
 	}
-	public void setQty(long qty) {
-		this.qty = qty;
+	public void setProductqtyavilabel(long productqtyavilabel) {
+		this.productqtyavilabel = productqtyavilabel;
 	}
-	public long getFinalprice() {
-		return finalprice;
-	}
-	public void setFinalprice(long finalprice) {
-		this.finalprice = finalprice*qty;
-	}
+	
 
 }

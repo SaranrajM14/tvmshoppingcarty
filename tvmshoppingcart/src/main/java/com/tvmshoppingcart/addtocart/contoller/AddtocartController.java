@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.tvmshoppingcart.addtocart.model.Addtocart;
 import com.tvmshoppingcart.addtocart.model.Payment;
-
+import com.tvmshoppingcart.addtocart.model.Product;
 import com.tvmshoppingcart.addtocart.model.User;
 import com.tvmshoppingcart.addtocart.service.AddtocartPaymentService;
-
+import com.tvmshoppingcart.addtocart.service.AddtocartProductService;
 import com.tvmshoppingcart.addtocart.service.AddtocartService;
 import com.tvmshoppingcart.addtocart.service.AddtocartUserService;
 
@@ -30,7 +30,8 @@ public class AddtocartController {
 	private AddtocartService addtocartService;
 	@Autowired
 	private AddtocartUserService addtocartUserService; 
-	
+	@Autowired
+	private AddtocartProductService addtocartProductService;
 	@Autowired
 	private AddtocartPaymentService addtocartPaymentService;
 	@GetMapping("/")
@@ -60,21 +61,37 @@ public class AddtocartController {
 		addtocartService.deleteAddtocartById(userid);
 		return "redirect:/";
 	}
-	@PostMapping("/savePayment")
-    public String savePayment(@ModelAttribute("payment") Payment payment) {
-    	addtocartPaymentService.saveAddtocartPayment(payment);
-        return "redirect:/";
+	@PostMapping("/savePayment/{id}")
+    public String savePayment(@ModelAttribute("payment") Payment payment,@PathVariable(value="id") long id) {
+    	Addtocart addtocart=addtocartService.getAddtocartById(id);
+    	long productid=addtocart.getProductid();
+    	long productqty=addtocart.getProductqty();
+		Product product=addtocartProductService.getProductById(productid);
+    	long productqty1=product.getProductqtyavilabel();
+    	if (productqty<=productqty1) {
+    		productqty1 -=productqty;
+    		product.setProductqtyavilabel(productqty1);
+    		addtocartProductService.saveProduct(product);
+    		addtocartPaymentService.saveAddtocartPayment(payment);
+    		return "redirect:/productplaced/{id}";
+    	}
+    	else{
+    		return "redirect:/outofproduct/{id}";
+    	}
         
     }
+	
     @GetMapping("/placepage/{id}")
     public String placePage(@PathVariable(value="id")long id,Model model) {
     	Addtocart addtocart=addtocartService.getAddtocartById(id);
         long userid2=addtocart.getUserid1();
+        long productid=addtocart.getProductid();
     	User user=addtocartUserService.getUserById(userid2);
     	Payment payment=new Payment();
     	model.addAttribute("addtocart",addtocart);
     	model.addAttribute("user", user);
     	model.addAttribute("payment", payment);
+    	model.addAttribute("productid", productid);
     	return "placepage";
     }
     
@@ -100,6 +117,18 @@ public class AddtocartController {
     	addtocart.setFinalprice(finalprice);
     	addtocartService.saveAddtocart(addtocart);
     	return "redirect:/addtocartuser/{userid1}";
+    }
+    @GetMapping("/outofproduct/{id}")
+    public String outofProduct(@PathVariable(value="id") long id,Model model) {
+    	Addtocart addtocart=addtocartService.getAddtocartById(id);
+    	model.addAttribute("addtocart", addtocart);
+    	return "outofproduct";
+    }
+    @GetMapping("/productplaced/{id}")
+    public String productPlaced(@PathVariable(value="id")long id,Model model ) {
+    	Addtocart addtocart=addtocartService.getAddtocartById(id);
+    	model.addAttribute("addtocart", addtocart);
+    	return "placeorder";
     }
     
 	
