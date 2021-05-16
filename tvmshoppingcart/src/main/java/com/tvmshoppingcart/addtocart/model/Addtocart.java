@@ -10,12 +10,19 @@ import javax.persistence.Table;
 @Table(name="addtocart")
 public class Addtocart {
 	@Id
-	private long userid;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	private String userid;
+	private long userid1;
 	private long productid;
-	public long getUserid() {
+	private String productname;
+	private long productqty;
+	private long productprice;
+	private long finalprice;
+	public String getUserid() {
 		return userid;
 	}
-	public void setUserid(long userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 	public long getProductid() {
@@ -25,6 +32,43 @@ public class Addtocart {
 		this.productid = productid;
 	}
 	//<td> <a th:href="@{/showFormForProduct/{userid}(userid=${addtocart.userid})}/{productid}(productid=${addtocart.productid})}" class="btn btn-primary">Update</a></td>
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getProductname() {
+		return productname;
+	}
+	public void setProductname(String productname) {
+		this.productname = productname;
+	}
+	public long getProductqty() {
+		return productqty;
+	}
+	public void setProductqty(long productqty) {
+		this.productqty = productqty;
+	}
+	public long getProductprice() {
+		return productprice;
+	}
+	public void setProductprice(long productprice) {
+		this.productprice = productprice;
+	}
+	public long getFinalprice() {
+		return finalprice;
+	}
+	public void setFinalprice(long finalprice) {
+		this.finalprice =productqty*productprice;
+	}
+	public long getUserid1() {
+		return userid1;
+	}
+	public void setUserid1(long userid1) {
+		this.userid1 = userid1;
+	}
+	
 	
 	
 }

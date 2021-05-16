@@ -9,7 +9,7 @@ public interface AddtocartService {
 	List< Addtocart > getAllAddtocart();
 	void saveAddtocart(Addtocart addtocart);
 	Addtocart getAddtocartById(long userid);
-	
+	List<Addtocart> getAllAddtocartByUserid(String userid);
     void deleteAddtocartById(long userid);
     
     

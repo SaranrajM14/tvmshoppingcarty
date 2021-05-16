@@ -37,7 +37,10 @@ public class AddtocartServiceImpl implements AddtocartService {
 	    public void deleteAddtocartById(long userid) {
 	        this.addtocartRepository.deleteById(userid);
 	    }
-	
+	 @Override
+	    public List < Addtocart > getAllAddtocartByUserid(String userid) {
+	        return addtocartRepository.findAll(userid);
+	    }
 	 
 
 }
